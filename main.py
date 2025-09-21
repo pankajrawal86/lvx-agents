@@ -1,14 +1,10 @@
-import os
+from app import create_app
+from flask_cors import CORS
 
-from flask import Flask
+app = create_app()
+CORS(app)
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello_world():
-  """Example Hello World route."""
-  name = os.environ.get("NAME", "World")
-  return f"Hello {name}!"
-
-if __name__ == "__main__":
-  app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 3000)))
+if __name__ == '__main__':
+    # In a production environment, you would use a WSGI server like Gunicorn
+    # For development, the Flask development server is fine.
+    app.run(debug=True)
