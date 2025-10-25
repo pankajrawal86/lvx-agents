@@ -9,5 +9,9 @@
       "firebase-debug.*.log",
       "functions"
     ]
+  },
+  "service": {
+    "name": "lvx-deals",
+    "runtime": "python"
   }
 }
