@@ -1,0 +1,4 @@
+build:
+  builder: gcr.io/buildpacks/builder:v1
+  buildpacks:
+    - google.python.pip
