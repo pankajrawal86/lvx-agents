@@ -47,4 +47,4 @@ class BenchmarkingAgent(ToolbeltAgent):
         """
 
         report = self.generate_text_with_llm(prompt)
-        return {{"benchmarking_analysis": report}}
+        return {"benchmarking_analysis": report}

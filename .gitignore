@@ -1,8 +1,2 @@
-# Virtual Environment
-.venv/
-
-# Python cache
-__pycache__/
-
-# Environment variables
-.env
+vector_search_credentials.json
+firebase-credentials.json

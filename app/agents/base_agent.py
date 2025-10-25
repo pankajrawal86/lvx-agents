@@ -24,7 +24,7 @@ class ToolbeltAgent:
         model_tools = { "tools": self.tools } if self.tools else {}
 
         return genai.GenerativeModel(
-            model_name='gemini-1.5-flash-latest',
+            model_name='gemini-flash-latest',
             **model_tools
         )
 
