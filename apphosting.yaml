@@ -5,8 +5,8 @@ runConfig:
   ingress: open
   # maxInstances: 100
   # concurrency: 80
-  # cpu: 1
-  # memoryMiB: 512
+  cpu: 1
+  memoryMiB: 512
 
 # Environment variables and secrets.
 # env:
@@ -24,4 +24,4 @@ runConfig:
   #   secret: mySecretRef
 
 # The command to start your app.
-entrypoint: gunicorn --workers 2 --threads 8 --timeout 0 main:app
+entrypoint: gunicorn main:app
