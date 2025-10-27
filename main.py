@@ -8,3 +8,5 @@ if __name__ == '__main__':
     # In a production environment, you would use a WSGI server like Gunicorn
     # For development, the Flask development server is fine.
     app.run(debug=True)
+
+# Force a new build by adding a comment
