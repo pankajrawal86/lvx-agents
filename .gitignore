@@ -1,5 +1,22 @@
-.venv/
-__pycache__/
-*.pyc
+# Firebase
 firebase-credentials.json
 vector_search_credentials.json
+
+# Nix
+.direnv
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# General
+.DS_Store
+
+# Environments
+.env
+*.env.local
+
+# Logs
+*.log

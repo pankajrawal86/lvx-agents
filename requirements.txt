@@ -6,3 +6,4 @@ python-dotenv
 google-cloud-storage
 sendgrid
 gunicorn
+google-cloud-secret-manager

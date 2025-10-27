@@ -1,6 +1,7 @@
 
 import os
-# from google.cloud import aiplatform
+import json
+from google.cloud import secretmanager
 import firebase_admin
 from firebase_admin import credentials as firebase_credentials, db
 import google.generativeai as genai
@@ -24,23 +25,30 @@ else:
 # --- Firebase Realtime Database Service ---
 # Initialize Firebase Admin SDK
 if not firebase_admin._apps:
-    # Look for credentials in the current working directory
-    cred_path = os.path.join(os.getcwd(), "firebase-credentials.json")
-    if os.path.exists(cred_path):
-        try:
-            cred = firebase_credentials.Certificate(cred_path)
-            db_url = os.environ.get("FIREBASE_DATABASE_URL")
-            if db_url:
-                firebase_admin.initialize_app(cred, {
-                    'databaseURL': db_url
-                })
-                print("Firebase Admin SDK initialized successfully.")
-            else:
-                print("Warning: FIREBASE_DATABASE_URL environment variable not set. Firebase will not be initialized.")
-        except Exception as e:
-            print(f"Error initializing Firebase Admin SDK: {e}")
-    else:
-        print("Warning: firebase-credentials.json not found. Firebase will not be initialized.")
+    try:
+        # Create the Secret Manager client.
+        client = secretmanager.SecretManagerServiceClient()
+
+        # Get the secret version.
+        project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+        secret_id = "firebase-credentials"
+        version_id = "latest"
+        name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
+        response = client.access_secret_version(request={"name": name})
+        secret_payload = response.payload.data.decode("UTF-8")
+        cred_dict = json.loads(secret_payload)
+        
+        cred = firebase_credentials.Certificate(cred_dict)
+        db_url = os.environ.get("FIREBASE_DATABASE_URL")
+        if db_url:
+            firebase_admin.initialize_app(cred, {
+                'databaseURL': db_url
+            })
+            print("Firebase Admin SDK initialized successfully.")
+        else:
+            print("Warning: FIREBASE_DATABASE_URL environment variable not set. Firebase will not be initialized.")
+    except Exception as e:
+        print(f"Error initializing Firebase Admin SDK: {e}")
 
 class GoogleRealtimeDatabase:
     """A wrapper class for the Firebase Realtime Database to be used as a tool for the LLM.
