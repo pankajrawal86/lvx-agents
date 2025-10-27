@@ -1,6 +1,6 @@
 
 import os
-from google.cloud import aiplatform
+# from google.cloud import aiplatform
 import firebase_admin
 from firebase_admin import credentials as firebase_credentials, db
 import google.generativeai as genai

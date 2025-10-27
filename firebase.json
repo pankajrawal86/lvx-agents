@@ -1,17 +1,19 @@
 {
-  "apphosting": {
-    "backendId": "lvx-deals",
-    "rootDir": "/",
+  "hosting": {
+    "public": "public",
     "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log",
-      "functions"
+      "firebase.json",
+      "**/.*",
+      "**/node_modules"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "lvx-deals",
+          "region": "us-central1" 
+        }
+      }
     ]
-  },
-  "service": {
-    "name": "lvx-deals",
-    "runtime": "python"
   }
 }
