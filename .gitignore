@@ -1,3 +1,5 @@
 .venv/
 __pycache__/
 *.pyc
+firebase-credentials.json
+vector_search_credentials.json
