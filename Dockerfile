@@ -18,7 +18,7 @@ EXPOSE 8080
 
 # Define environment variable
 ENV PORT 8080
-ENV GOOGLE_CLOUD_PROJECT=lvx-dev-391407
+ENV GOOGLE_CLOUD_PROJECT=957067310888
 
 # Run the application
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
