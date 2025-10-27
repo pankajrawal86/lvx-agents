@@ -32,7 +32,7 @@ if not firebase_admin._apps:
         # Get the secret version.
         project_id = os.environ.get("GOOGLE_CLOUD_PROJECT_NUMBER")
         secret_id = "firebase-credentials"
-        version_id = "latest"
+        version_id = "1"
         name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
         response = client.access_secret_version(request={"name": name})
         secret_payload = response.payload.data.decode("UTF-8")
