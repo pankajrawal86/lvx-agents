@@ -1,0 +1,5 @@
+# This file signals the presence of a backend to Firebase App Hosting.
+# By leaving it empty of build instructions, we force App Hosting to
+# find and use the Dockerfile to build the container image.
+
+entrypoint: gunicorn main:app --bind 0.0.0.0:$PORT
