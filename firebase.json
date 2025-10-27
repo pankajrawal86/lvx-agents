@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,10 +8,7 @@
     "rewrites": [
       {
         "source": "**",
-        "run": {
-          "serviceId": "lvx-deals",
-          "region": "us-central1" 
-        }
+        "app": {}
       }
     ]
   }
