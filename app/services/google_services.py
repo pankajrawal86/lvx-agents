@@ -30,7 +30,7 @@ if not firebase_admin._apps:
         client = secretmanager.SecretManagerServiceClient()
 
         # Get the secret version.
-        project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+        project_id = os.environ.get("GOOGLE_CLOUD_PROJECT_NUMBER")
         secret_id = "firebase-credentials"
         version_id = "latest"
         name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
@@ -83,7 +83,7 @@ class GoogleVectorDB:
         print("--- GoogleVectorDB initialization is commented out. Vector search will be disabled. ---")
         # try:
         #     # Get environment variables
-        #     project = os.environ.get("GOOGLE_CLOUD_PROJECT")
+        #     project = os.environ.get("GOOGLE_CLOUD_PROJECT_NUMBER")
         #     region = os.environ.get("VECTOR_SEARCH_REGION")
         #     endpoint_id = os.environ.get("VECTOR_SEARCH_ENDPOINT_ID")
         #     deployed_index_id = os.environ.get("VECTOR_SEARCH_DEPLOYED_INDEX_ID")
