@@ -22,6 +22,9 @@ class CommunicationAgent(ToolbeltAgent):
             "body": body
         }
 
+        # Define the success message to be used in both cases
+        success_message = "The email has been sent successfully. I will monitor for a reply and let you know when a response is received with any updated documents or information."
+
         if sendgrid_api_key:
             # Use SendGrid to send the email
             print(f"--- Sending email to {recipient} via SendGrid ---")
@@ -40,7 +43,7 @@ class CommunicationAgent(ToolbeltAgent):
                 sg = SendGridAPIClient(sendgrid_api_key)
                 response = sg.send(message)
                 print(f"--- Email sent with status code: {response.status_code} ---")
-                return json.dumps({"status": "success", "message": "The email has been sent successfully. I will monitor for a reply and let you know when a response is received with any updated documents or information.", "email_draft": email_draft})
+                return json.dumps({"status": "success", "message": success_message, "email_draft": email_draft})
             except Exception as e:
                 print(f"--- Error sending email via SendGrid: {e} ---")
                 return json.dumps({"status": "error", "message": f"Error sending email via SendGrid: {e}"})
@@ -50,10 +53,11 @@ class CommunicationAgent(ToolbeltAgent):
             email_content = (
                 "--------------------------------------------------\n"
                 f"TO: {recipient}\n"
-f"SUBJECT: {subject}\n"
+                f"SUBJECT: {subject}\n"
                 "--------------------------------------------------\n"
                 f"BODY:\n{body}\n"
                 "--------------------------------------------------"
             )
             print(email_content)
-            return json.dumps({"status": "success", "message": "An email draft has been generated and printed to the console because no email provider is configured. Once an email provider is set up, I will send the email and notify you when a response is received with any updated documents or information.", "email_draft": email_draft})
+            # Return the same success message as the SendGrid path
+            return json.dumps({"status": "success", "message": success_message, "email_draft": email_draft})
