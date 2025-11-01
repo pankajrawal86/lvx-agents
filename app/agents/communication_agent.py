@@ -40,7 +40,7 @@ class CommunicationAgent(ToolbeltAgent):
                 sg = SendGridAPIClient(sendgrid_api_key)
                 response = sg.send(message)
                 print(f"--- Email sent with status code: {response.status_code} ---")
-                return json.dumps({"status": "success", "message": "Email sent successfully via SendGrid.", "email_draft": email_draft})
+                return json.dumps({"status": "success", "message": "The email has been sent successfully. I will monitor for a reply and let you know when a response is received with any updated documents or information.", "email_draft": email_draft})
             except Exception as e:
                 print(f"--- Error sending email via SendGrid: {e} ---")
                 return json.dumps({"status": "error", "message": f"Error sending email via SendGrid: {e}"})
@@ -56,4 +56,4 @@ f"SUBJECT: {subject}\n"
                 "--------------------------------------------------"
             )
             print(email_content)
-            return json.dumps({"status": "success", "message": "Email draft generated and printed to console.", "email_draft": email_draft})
+            return json.dumps({"status": "success", "message": "An email draft has been generated and printed to the console because no email provider is configured. Once an email provider is set up, I will send the email and notify you when a response is received with any updated documents or information.", "email_draft": email_draft})

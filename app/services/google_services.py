@@ -7,6 +7,7 @@ from firebase_admin import credentials as firebase_credentials, db
 import google.generativeai as genai
 from dotenv import load_dotenv
 from google.oauth2 import service_account
+from google.cloud import aiplatform
 
 # Load environment variables from .env file
 load_dotenv()
@@ -80,39 +81,38 @@ class GoogleRealtimeDatabase:
 class GoogleVectorDB:
     def __init__(self):
         self.initialized = False
-        print("--- GoogleVectorDB initialization is commented out. Vector search will be disabled. ---")
-        # try:
-        #     # Get environment variables
-        #     project = os.environ.get("GOOGLE_CLOUD_PROJECT_NUMBER")
-        #     region = os.environ.get("VECTOR_SEARCH_REGION")
-        #     endpoint_id = os.environ.get("VECTOR_SEARCH_ENDPOINT_ID")
-        #     deployed_index_id = os.environ.get("VECTOR_SEARCH_DEPLOYED_INDEX_ID")
-        #     credentials_path = "vector_search_credentials.json"
+        try:
+            # Get environment variables
+            project = os.environ.get("VECTOR_GOOGLE_CLOUD_PROJECT_NUMBER")
+            region = os.environ.get("VECTOR_SEARCH_REGION")
+            endpoint_id = os.environ.get("VECTOR_SEARCH_ENDPOINT_ID")
+            deployed_index_id = os.environ.get("VECTOR_SEARCH_DEPLOYED_INDEX_ID")
+            credentials_path = "vector_search_credentials.json"
 
-        #     # Check if all environment variables are set
-        #     if not all([project, region, endpoint_id, deployed_index_id]):
-        #         print("Warning: Vector search environment variables not fully set. Vector search will not work.")
-        #         return
+            # Check if all environment variables are set
+            if not all([project, region, endpoint_id, deployed_index_id]):
+                print("Warning: Vector search environment variables not fully set. Vector search will not work.")
+                return
             
-        #     if not os.path.exists(credentials_path):
-        #         print(f"Warning: {credentials_path} not found. Vector search will not be initialized.")
-        #         return
+            if not os.path.exists(credentials_path):
+                print(f"Warning: {credentials_path} not found. Vector search will not be initialized.")
+                return
 
-        #     credentials = service_account.Credentials.from_service_account_file(credentials_path)
+            credentials = service_account.Credentials.from_service_account_file(credentials_path)
 
-        #     # Initialize the AI Platform client with the service account credentials
-        #     aiplatform.init(project=project, location=region, credentials=credentials)
+            # Initialize the AI Platform client with the service account credentials
+            aiplatform.init(project=project, location=region, credentials=credentials)
 
-        #     # Get the endpoint
-        #     self.index_endpoint = aiplatform.MatchingEngineIndexEndpoint(index_endpoint_name=endpoint_id)
+            # Get the endpoint
+            self.index_endpoint = aiplatform.MatchingEngineIndexEndpoint(index_endpoint_name=endpoint_id)
 
-        #     self.deployed_index_id = deployed_index_id
-        #     self.initialized = True
-        #     print("Vertex AI Vector Search initialized successfully.")
+            self.deployed_index_id = deployed_index_id
+            self.initialized = True
+            print("Vertex AI Vector Search initialized successfully.")
 
-        # except Exception as e:
-        #     print(f"An error occurred during Vertex AI initialization: {e}")
-        #     self.initialized = False
+        except Exception as e:
+            print(f"An error occurred during Vertex AI initialization: {e}")
+            self.initialized = False
 
     def search(self, query, num_neighbors=5):
         """Connects to the deployed index and finds the nearest neighbors.

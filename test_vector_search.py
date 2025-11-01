@@ -29,7 +29,7 @@ def test_vector_search_connectivity():
         return
 
     # Use a simple query to test the connection
-    test_query = "What does the fox do?"
+    test_query = "Who is the founder?"
     print(f"\n--- Running vector_search with query: '{test_query}' ---")
     
     try:
