@@ -90,19 +90,6 @@ def initialize_services():
     else:
         print("Warning: GOOGLE_API_KEY not found. LLM calls will fail.")
 
-    # Initialize Vertex AI for Vector Search
-    vector_project_id = os.environ.get("VECTOR_GOOGLE_CLOUD_PROJECT_ID")
-    vector_location = os.environ.get("VECTOR_SEARCH_REGION")
-    if vector_project_id and vector_location:
-        try:
-            from google.cloud import aiplatform
-            aiplatform.init(project=vector_project_id, location=vector_location)
-            print("Vertex AI Platform client configured for Vector Search.")
-        except Exception as e:
-            print(f"Error initializing Vertex AI Platform client: {e}")
-    else:
-        print("Warning: Vertex AI Search environment variables not fully set.")
-
 # --- Run Initialization --- 
 # This code runs once when the module is first imported.
 initialize_services()
