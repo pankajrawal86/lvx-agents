@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # --- Service Clients ---
 # These are initialized by initialize_services()
 generative_model = None
-
+realtime_db = None
 
 def initialize_services():
     """
@@ -14,7 +14,7 @@ def initialize_services():
     - In a GCP environment, it loads config from Secret Manager.
     - For local development, it loads config from a .env file.
     """
-    global generative_model
+    global generative_model, realtime_db
 
     # --- 1. Load Configuration ---
     project_id_number = os.environ.get("GOOGLE_CLOUD_PROJECT_NUMBER")
@@ -76,6 +76,7 @@ def initialize_services():
             print("Firebase Admin SDK initialized successfully.")
         else:
             print("Firebase Admin SDK was already initialized.")
+        realtime_db = db
     except Exception as e:
         print(f"CRITICAL: Failed to initialize Firebase Admin SDK: {e}")
         raise SystemExit(f"Could not initialize Firebase: {e}")
