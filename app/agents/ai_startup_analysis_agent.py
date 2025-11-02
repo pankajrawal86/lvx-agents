@@ -34,8 +34,8 @@ class AIStartupAnalysisAgent(ToolbeltAgent):
         """
         print(f"--- Fetching data for deal_id: {deal_id} from Firebase ---")
 
-        # 1. Query for deal information
-        deal_info_dict = realtime_db.query('deals', 'id', deal_id)
+        # 1. Query for deal information using a string for the ID.
+        deal_info_dict = realtime_db.query('deals', 'id', str(deal_id))
         if not deal_info_dict:
             print(f"--- No deal info found for deal_id: {deal_id} ---")
             return { "name": "Unknown Startup" }
@@ -45,7 +45,8 @@ class AIStartupAnalysisAgent(ToolbeltAgent):
         # 2. Get startupId from deal and query for startup details
         startup_id = deal_info.get('startupId')
         if startup_id:
-            startup_info_dict = realtime_db.query('startups', 'id', startup_id)
+            # Ensure startup_id is also a string for the query
+            startup_info_dict = realtime_db.query('startups', 'id', str(startup_id))
             if startup_info_dict:
                 startup_info = next(iter(startup_info_dict.values()), {})
                 print(f"--- Startup Info: {startup_info} ---")
@@ -56,8 +57,8 @@ class AIStartupAnalysisAgent(ToolbeltAgent):
                     print(f"--- Company Details: {startup_info['companyDetails']} ---")
                 deal_info.update( startup_info)
 
-        # 3. Query for key metrics
-        key_metrics_dict = realtime_db.query('keyMetrics', 'dealId', deal_id)
+        # 3. Query for key metrics, also using a string for the ID.
+        key_metrics_dict = realtime_db.query('keyMetrics', 'dealId', str(deal_id))
         if key_metrics_dict:
             key_metrics = next(iter(key_metrics_dict.values()), {})
             print(f"--- Key Metrics: {key_metrics} ---")
