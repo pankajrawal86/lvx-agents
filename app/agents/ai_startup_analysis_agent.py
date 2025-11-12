@@ -188,7 +188,7 @@ class AIStartupAnalysisAgent(ToolbeltAgent):
         The references should be formatted in italics and include the document name and page number.
         """
         response = self.generate_text_with_llm(prompt)
-        return {{ "chat_response": response }}
+        return { "chat_response": response }
 
     def _format_single_agent_response(self, agent_name, agent_result, startup_name):
         """
